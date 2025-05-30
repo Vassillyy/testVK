@@ -1,0 +1,30 @@
+{
+  "useTabs": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "printWidth": 80,
+  "plugins": [],
+  "overrides": [
+    {
+      "files": "*.tsx",
+      "options": {
+        "parser": "typescript"
+      }
+    },
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "typescript"
+      }
+    },
+    {
+      "files": "*.sass",
+      "options": {
+        "parser": "sass"
+      }
+    }
+  ],
+  "semi": false,
+  "bracketSpacing": false
+}
