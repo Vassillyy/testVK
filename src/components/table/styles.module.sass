@@ -1,0 +1,27 @@
+.table
+  $this: &
+  width: 1250px
+  margin-bottom: 20px
+  border-collapse: separate
+  border-spacing: 0
+  border: 2px solid black
+  overflow-x: auto
+  display: block
+  &__colHeader
+    max-width: 200px
+    padding: 5px 10px
+    text-align: center
+    font-size: 15px
+    background-color: Silver
+    border: 1px solid black
+  &__col
+    @extend #{$this}__colHeader
+    background-color: transparent
+
+  &::-webkit-scrollbar
+    height: 8px
+  &::-webkit-scrollbar-track
+    background: transparent
+  &::-webkit-scrollbar-thumb
+    background: DarkGray
+    border-radius: 4px

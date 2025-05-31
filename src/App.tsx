@@ -1,9 +1,14 @@
-import {useState} from 'react'
+import {Table} from '@/components/table'
+import {Button} from '@/components/button'
+import './App.sass'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return <div>111</div>
+  return (
+    <div className="appContainer">
+      <Table />
+      <Button />
+    </div>
+  )
 }
 
 export default App
