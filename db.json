@@ -1,0 +1,55 @@
+{
+  "get": [
+    {
+      "lastName": "Иванов",
+      "firstName": "Кирилл",
+      "middleName": "Иванович",
+      "gender": "Мужской",
+      "birthDate": "01.01.1990",
+      "citizenship": "Россия",
+      "city": "Москва",
+      "address": "ул. Лермонтова, д. 2",
+      "id": "#54321",
+      "phone": "+7 (495) 765-43-21",
+      "email": "ivanov@example.com",
+      "profession": "Инженер",
+      "experience": "",
+      "education": "Высшее",
+      "socialNetwork": ""
+    },
+    {
+      "lastName": "Васильев",
+      "firstName": "Петр",
+      "middleName": "Иванович",
+      "gender": "Мужской",
+      "birthDate": "02.02.1985",
+      "citizenship": "Россия",
+      "city": "Санкт-Петербург",
+      "address": "ул. Маяковского, д. 4",
+      "id": "#54341",
+      "phone": "",
+      "email": "petrov@example.com",
+      "profession": "Программист",
+      "experience": "10 лет",
+      "education": "Высшее",
+      "socialNetwork": ""
+    },
+    {
+      "lastName": "Сидорова",
+      "firstName": "Анна",
+      "middleName": "Сергеевна",
+      "gender": "Женский",
+      "birthDate": "03.03.1992",
+      "citizenship": "Россия",
+      "city": "",
+      "address": "ул. Чехова, д. 6",
+      "id": "#94621",
+      "phone": "+7 (343) 765-43-21",
+      "email": "sidorova@example.com",
+      "profession": "Дизайнер",
+      "experience": "3 года",
+      "education": "",
+      "socialNetwork": "@sidorova"
+    }
+  ]
+}
