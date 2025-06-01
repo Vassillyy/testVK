@@ -424,6 +424,23 @@
       "phone": "",
       "profession": "",
       "socialNetwork": ""
+    },
+    {
+      "id": "#429347",
+      "lastName": "Лукин",
+      "firstName": "Василий",
+      "citizenship": "Россия",
+      "birthDate": "05.09.1999",
+      "middleName": "Петрович",
+      "address": "Площадь Революции",
+      "city": "Москва",
+      "education": "ВЫсшее",
+      "email": "",
+      "experience": "",
+      "gender": "Мужской",
+      "phone": "",
+      "profession": "",
+      "socialNetwork": ""
     }
   ]
 }
