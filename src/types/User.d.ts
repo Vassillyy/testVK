@@ -10,7 +10,7 @@ export interface User {
   education?: string
   email?: string
   experience?: string
-  gender?: string
+  gender: string
   phone?: string
   profession?: string
   socialNetwork?: string

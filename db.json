@@ -390,6 +390,40 @@
       "phone": "",
       "profession": "",
       "socialNetwork": ""
+    },
+    {
+      "id": "#702264",
+      "lastName": "Васильев",
+      "firstName": "Антон",
+      "citizenship": "Румыния",
+      "birthDate": "12.04.1980",
+      "middleName": "",
+      "address": "",
+      "city": "",
+      "education": "",
+      "email": "",
+      "experience": "",
+      "gender": "Мужской",
+      "phone": "",
+      "profession": "",
+      "socialNetwork": ""
+    },
+    {
+      "id": "#702260",
+      "lastName": "Китаев",
+      "firstName": "Василий",
+      "citizenship": "Россия",
+      "birthDate": "05.09.1999",
+      "middleName": "",
+      "address": "Псковская Область",
+      "city": "Великие Луки",
+      "education": "",
+      "email": "",
+      "experience": "",
+      "gender": "Мужской",
+      "phone": "",
+      "profession": "",
+      "socialNetwork": ""
     }
   ]
 }

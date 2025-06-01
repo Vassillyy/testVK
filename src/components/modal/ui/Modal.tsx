@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {useAppDispatch, useAppSelector} from '@/store/helpers'
 import type {User} from '@/types/User'
 import {createUser} from '@/api/createUser'
@@ -6,6 +6,7 @@ import {closeModal} from '@/store/modalSlice'
 import {generateId} from '../model/generateId'
 import styles from '../styles.module.sass'
 
+/** Начальные данные формы */
 const initialData: User = {
   lastName: '',
   firstName: '',
@@ -24,7 +25,18 @@ const initialData: User = {
   socialNetwork: ''
 }
 
-const initialErrors = {
+type ErrorsType = {
+  lastName: string
+  firstName: string
+  birthDate: string
+  gender: string
+  citizenship: string
+  phone: string
+  email: string
+}
+
+/** Начальные данные по ошибкам */
+const initialErrors: ErrorsType = {
   lastName: '',
   firstName: '',
   birthDate: '',
@@ -45,23 +57,58 @@ const Modal = ({onSuccess}: Props) => {
   const isOpen = useAppSelector((state) => state.modal.open)
   const dispatch = useAppDispatch()
 
+  /** Делаем проверку что все обязательные поля заполнены */
+  const isButtonActive = useMemo(() => {
+    const {lastName, firstName, gender, citizenship, birthDate} = formData
+    return (
+      lastName.trim() &&
+      firstName.trim() &&
+      gender.trim() &&
+      citizenship.trim() &&
+      birthDate.trim()
+    )
+  }, [formData])
+
   if (!isOpen) return null
 
+  /** При закрытии модалки удаляем данные */
+  const clearData = () => {
+    dispatch(closeModal())
+    setFormData(initialData)
+    setErrors(initialErrors)
+  }
+
+  /** Проверяем на наличие ошибок */
+  const getFirstError = (): string | null => {
+    for (const key in errors) {
+      if (errors[key as keyof ErrorsType])
+        return errors[key as keyof ErrorsType]
+    }
+
+    return null
+  }
+
+  /** Первая ошибка в списке */
+  const firstErrorMessage: string | null = getFirstError()
+
+  /** Отправляем данные на сервер и делаем очистку */
   const handleSubmit = async () => {
     const newErrors = {...errors}
 
-    if (!formData.lastName) newErrors.lastName = 'Заполните поле'
-    if (!formData.firstName) newErrors.firstName = 'Заполните поле'
-    if (!formData.gender) newErrors.gender = 'Заполните поле'
-    if (!formData.citizenship) newErrors.citizenship = 'Заполните поле'
-    if (!formData.birthDate) newErrors.birthDate = 'Заполните поле'
+    if (!formData.lastName) newErrors.lastName = 'Заполните поле "Фамилия"'
+    if (!formData.firstName) newErrors.firstName = 'Заполните поле "Имя"'
+    if (!formData.gender) newErrors.gender = 'Заполните поле "Пол"'
+    if (!formData.citizenship)
+      newErrors.citizenship = 'Заполните поле "Гражданство"'
+    if (!formData.birthDate)
+      newErrors.birthDate = ' Заполните поле "Дата рождения"'
     else {
       const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(\d{4})$/
       if (!dateRegex.test(formData.birthDate))
-        newErrors.birthDate = 'Некорректный формат'
+        newErrors.birthDate = 'Некорректный формат даты'
     }
     if (formData.phone) {
-      const phoneRegex = /^[\+\(\)\d\s\-]{10,20}$/
+      const phoneRegex = /^[+()\d\s-]{10,20}$/
       if (!phoneRegex.test(formData.phone))
         newErrors.phone = 'Некорректный номер телефона'
     }
@@ -79,9 +126,7 @@ const Modal = ({onSuccess}: Props) => {
 
     if (!hasErrors) {
       await createUser(formData)
-      dispatch(closeModal())
-      setFormData(initialData)
-      setErrors(initialErrors)
+      clearData()
       onSuccess()
     }
   }
@@ -281,15 +326,21 @@ const Modal = ({onSuccess}: Props) => {
             />
           </div>
         </form>
-        <button className={styles.modal__buttonAdd} onClick={handleSubmit}>
-          Добавить
-        </button>
-        <button
-          className={styles.modal__buttonBack}
-          onClick={() => dispatch(closeModal())}
-        >
-          Назад
-        </button>
+        <div className={styles.modal__blockButton}>
+          {firstErrorMessage && (
+            <div className={styles.modal__error}>{firstErrorMessage}</div>
+          )}
+          <button className={styles.modal__buttonBack} onClick={clearData}>
+            Назад
+          </button>
+          <button
+            className={styles.modal__buttonAdd}
+            onClick={handleSubmit}
+            disabled={!isButtonActive}
+          >
+            Добавить
+          </button>
+        </div>
       </div>
     </div>
   )
