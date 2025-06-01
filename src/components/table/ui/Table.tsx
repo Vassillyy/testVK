@@ -12,7 +12,7 @@ type Props = {
 
 const Table = ({reloadTrigger}: Props) => {
   const [users, setUsers] = useState<User[]>([])
-  const [step, setStep] = useState<number>(0)
+  const [page, setPage] = useState<number>(1)
   const tableContainerRef = useRef<HTMLTableElement | null>(null)
   const prevScrollBottomRef = useRef<number>(0)
   const hasMoreData = useRef<boolean>(true)
@@ -25,7 +25,7 @@ const Table = ({reloadTrigger}: Props) => {
       if (hasMoreData.current) {
         dispatch(startLoading())
         try {
-          const usersList: User[] = await getUsersList(step)
+          const usersList: User[] = await getUsersList(page)
 
           if (usersList.length) {
             setUsers((prevUsers) => [...prevUsers, ...usersList])
@@ -39,11 +39,11 @@ const Table = ({reloadTrigger}: Props) => {
     }
 
     fetchData()
-  }, [step])
+  }, [page])
 
   useEffect(() => {
     setUsers([])
-    setStep(0)
+    setPage(1)
     hasMoreData.current = true
   }, [reloadTrigger])
 
@@ -60,7 +60,7 @@ const Table = ({reloadTrigger}: Props) => {
 
         prevScrollBottomRef.current = currentScrollBottom
         if (currentScrollBottom <= container.clientHeight + 10) {
-          setStep((prev) => prev + 10)
+          setPage((prev) => prev + 1)
         }
       }
     }
