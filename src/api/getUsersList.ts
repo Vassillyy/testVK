@@ -1,4 +1,4 @@
-import type {User} from '@/types/User'
+import type {User} from '@/types'
 
 /** Получаем список пользователей */
 export const getUsersList = async (page: number = 1): Promise<User[]> => {

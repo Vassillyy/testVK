@@ -1,4 +1,4 @@
-import type {User} from '@/types/User'
+import type {User} from '@/types'
 
 /** Создание пользователя */
 export const createUser = async (userData: User) => {

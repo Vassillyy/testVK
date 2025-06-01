@@ -1,7 +1,7 @@
 import {useMemo, useState} from 'react'
 import {useAppDispatch, useAppSelector} from '@/store/helpers'
-import type {User} from '@/types/User'
-import {createUser} from '@/api/createUser'
+import type {ErrorsType, User} from '@/types'
+import {createUser} from '@/api'
 import {closeModal} from '@/store/modalSlice'
 import {generateId} from '../model/generateId'
 import styles from '../styles.module.sass'
@@ -23,16 +23,6 @@ const initialData: User = {
   phone: '',
   profession: '',
   socialNetwork: ''
-}
-
-type ErrorsType = {
-  lastName: string
-  firstName: string
-  birthDate: string
-  gender: string
-  citizenship: string
-  phone: string
-  email: string
 }
 
 /** Начальные данные по ошибкам */

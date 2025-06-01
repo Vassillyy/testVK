@@ -1,4 +1,4 @@
-import type {HeaderItem} from '@/types/HeaderItem'
+import type {HeaderItem} from '@/types'
 
 export const headers: HeaderItem[] = [
   {key: 'lastName', label: 'Фамилия'},

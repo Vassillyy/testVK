@@ -2,8 +2,8 @@ import React, {useEffect, useRef, useState} from 'react'
 import {startLoading, stopLoading} from '@/store/loadingDataSlice'
 import {useAppDispatch, useAppSelector} from '@/store/helpers'
 import {headers} from '../model/headers'
-import {getUsersList} from '@/api/getUsersList'
-import type {User} from '@/types/User'
+import {getUsersList} from '@/api'
+import type {User} from '@/types'
 import styles from '../styles.module.sass'
 
 type Props = {
