@@ -1,0 +1,74 @@
+.overlay
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background-color: rgba(128, 128, 128, 0.5)
+  display: flex
+  justify-content: center
+  align-items: center
+  z-index: 9999
+  pointer-events: auto
+
+.modal
+  width: 600px
+  height: 600px
+  padding: 20px
+  border-radius: 8px
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1)
+  background-color: white
+  display: flex
+  flex-direction: column
+  align-items: center
+  position: relative
+  &__title
+    margin-top: 0
+    margin-bottom: 10px
+  &__form
+    display: grid
+    grid-template-columns: 1fr 2fr
+    gap: 8px 15px
+  &__formRow
+    display: contents
+  &__formLabel
+    font-size: 17px
+    font-weight: 500
+    align-self: center
+  &__formInput
+    width: 200px
+    padding: 4px 8px
+    border: 1px solid #ccc
+    border-radius: 4px
+    font-size: 16px
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1)
+    transition: border-color 0.2s, box-shadow 0.2s
+    outline: none
+    &:focus
+      border-color: #66afe9
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.2), 0 0 8px rgba(102, 175, 233, 0.6)
+  &__buttonAdd
+    position: absolute
+    bottom: 20px
+    right: 20px
+    background-color: #4CAF50
+    color: white
+    border: none
+    padding: 6px 12px
+    font-size: 16px
+    border-radius: 8px
+    cursor: pointer
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
+    transition: background-color 0.3s, transform 0.2s
+    &:hover
+      background-color: #45a049
+      transform: scale(1.05)
+  &__buttonBack
+    position: absolute
+    bottom: 20px
+    right: 120px
+    background-color: transparent
+    border: none
+    padding: 6px 12px
+    font-size: 16px
+    cursor: pointer

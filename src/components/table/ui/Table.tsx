@@ -1,27 +1,77 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
+import {startLoading, stopLoading} from '@/store/loadingDataSlice'
+import {useAppDispatch, useAppSelector} from '@/store/helpers'
 import {headers} from '../model/headers'
 import {getUsersList} from '@/api/getUsersList'
 import type {User} from '@/types/User'
 import styles from '../styles.module.sass'
 
-const Table = () => {
-  const [data, setData] = useState<User[]>([])
+type Props = {
+  reloadTrigger: number
+}
+
+const Table = ({reloadTrigger}: Props) => {
+  const [users, setUsers] = useState<User[]>([])
+  const [step, setStep] = useState<number>(0)
+  const tableContainerRef = useRef<HTMLTableElement | null>(null)
+  const prevScrollBottomRef = useRef<number>(0)
+  const hasMoreData = useRef<boolean>(true)
+
+  const dispatch = useAppDispatch()
+  const isLoading = useAppSelector((state) => state.loading.isLoading)
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const usersList: User[] = await getUsersList()
-        setData(usersList)
-      } catch (err) {
-        console.error(err)
+      if (hasMoreData.current) {
+        dispatch(startLoading())
+        try {
+          const usersList: User[] = await getUsersList(step)
+
+          if (usersList.length) {
+            setUsers((prevUsers) => [...prevUsers, ...usersList])
+          } else hasMoreData.current = false
+        } catch (err) {
+          console.error(err)
+        } finally {
+          dispatch(stopLoading())
+        }
       }
     }
 
     fetchData()
-  }, [])
+  }, [step])
+
+  useEffect(() => {
+    setUsers([])
+    setStep(0)
+    hasMoreData.current = true
+  }, [reloadTrigger])
+
+  const handleScroll = () => {
+    if (hasMoreData.current && !isLoading) {
+      const container: HTMLTableElement | null = tableContainerRef.current
+
+      if (container) {
+        const currentScrollBottom: number = Math.floor(
+          container.scrollHeight - container.scrollTop
+        )
+
+        if (currentScrollBottom === prevScrollBottomRef.current) return
+
+        prevScrollBottomRef.current = currentScrollBottom
+        if (currentScrollBottom <= container.clientHeight + 10) {
+          setStep((prev) => prev + 10)
+        }
+      }
+    }
+  }
 
   return (
-    <table className={styles.table}>
+    <table
+      className={styles.table}
+      ref={tableContainerRef}
+      onScroll={handleScroll}
+    >
       <thead>
         <tr>
           {headers.map((header, index) => {
@@ -34,14 +84,22 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {data?.length > 0
-          ? data.map((item, rowIndex) => (
-              <tr key={rowIndex}>
-                {headers.map((header, colIndex) => (
-                  <td className={styles.table__col} key={colIndex}>
-                    {item[header.key] || '-'}
-                  </td>
-                ))}
+        {users.map((item, rowIndex) => (
+          <tr key={rowIndex}>
+            {headers.map((header, colIndex) => (
+              <td className={styles.table__col} key={colIndex}>
+                {item[header.key] || '-'}
+              </td>
+            ))}
+          </tr>
+        ))}
+
+        {isLoading
+          ? Array.from({length: 3}).map((_, index) => (
+              <tr key={index}>
+                <td colSpan={100}>
+                  <div className={styles.table__skeletonLine}></div>
+                </td>
               </tr>
             ))
           : null}

@@ -1,28 +1,44 @@
 .table
   $this: &
   width: 1250px
+  max-height: 500px
   margin-bottom: 20px
   border-collapse: separate
   border-spacing: 0
   border: 2px solid black
-  overflow-x: auto
+  overflow: auto
   display: block
   &__colHeader
-    max-width: 200px
     padding: 5px 10px
     text-align: center
-    font-size: 15px
+    font-size: 22px
     background-color: Silver
     border: 1px solid black
     white-space: nowrap
   &__col
     @extend #{$this}__colHeader
     background-color: transparent
+  &__skeletonLine
+    height: 30px
+    background-color: #ccc
+    border-radius: 6px
+    margin: 5px 10px
+    animation: pulse 1.5s infinite ease-in-out
 
   &::-webkit-scrollbar
     height: 8px
+    width: 8px
   &::-webkit-scrollbar-track
     background: transparent
   &::-webkit-scrollbar-thumb
     background: DarkGray
     border-radius: 4px
+
+  @keyframes pulse
+    0%
+      background-color: #ccc
+    50%
+      background-color: #ddd
+    100%
+      background-color: #ccc
+
